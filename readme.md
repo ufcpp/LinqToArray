@@ -1,5 +1,7 @@
 # Optimized LINQ subset dedicated to array
 
+NuGet: https://www.nuget.org/packages/LinqToArray/
+
 ## Background
 
 One day when I was looking at our codes, about 80% of the scene using LINQ uses array as an argument, and calls `ToArray` instantly. In many case, We do not need the versatility as much as `System.Enumerable`, so I want optimized LINQ subset dedicated to array → array situation.
