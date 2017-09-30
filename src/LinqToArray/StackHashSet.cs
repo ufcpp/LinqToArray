@@ -23,7 +23,9 @@ namespace LinqToArray
             for (int i = 0; i < len; i++) buckets[i] = -1;
         }
 
+#if !NET35
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool Contains(T item)
         {
             var hash = default(TComp).GetHashCode(item) & mask;
@@ -44,7 +46,9 @@ namespace LinqToArray
             }
         }
 
+#if !NET35
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void MakeHashtTable()
         {
             var mask = len - 1;
@@ -54,7 +58,9 @@ namespace LinqToArray
             }
         }
 
+#if !NET35
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool Add(T item, int i)
         {
             var hash = default(TComp).GetHashCode(item) & mask;
@@ -77,7 +83,9 @@ namespace LinqToArray
             }
         }
 
+#if !NET35
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int GetOrAdd(T item, int i)
         {
             var hash = default(TComp).GetHashCode(item) & mask;

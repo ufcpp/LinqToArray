@@ -1,8 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;net35</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Nobuyuki Iwanaga</Authors>
+    <Company />
+    <Description>Optimized LINQ subset dedicated to array</Description>
+    <PackageLicenseUrl>https://github.com/ufcpp/LinqToArray/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ufcpp/LinqToArray</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ufcpp/LinqToArray</RepositoryUrl>
+    <PackageTags>LINQ</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

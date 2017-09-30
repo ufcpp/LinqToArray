@@ -5,22 +5,30 @@ using System.Linq;
 
 namespace LinqToArray
 {
-    public struct CompactDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
+    public struct CompactDictionary<TKey, TValue>
+#if !NET35
+        : IReadOnlyDictionary<TKey, TValue>
+#else
+        : IEnumerable<KeyValuePair<TKey, TValue>>
+#endif
         where TKey : IEquatable<TKey>
     {
         private CompactDictionary<TKey, TValue, StructEquatableComparer<TKey>> _inner;
 
-        public TValue this[TKey key] => ((IReadOnlyDictionary<TKey, TValue>)_inner)[key];
-        public IEnumerable<TKey> Keys => ((IReadOnlyDictionary<TKey, TValue>)_inner).Keys;
-        public IEnumerable<TValue> Values => ((IReadOnlyDictionary<TKey, TValue>)_inner).Values;
-        public int Count => ((IReadOnlyDictionary<TKey, TValue>)_inner).Count;
-        public bool ContainsKey(TKey key) => ((IReadOnlyDictionary<TKey, TValue>)_inner).ContainsKey(key);
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => ((IReadOnlyDictionary<TKey, TValue>)_inner).GetEnumerator();
-        public bool TryGetValue(TKey key, out TValue value) => ((IReadOnlyDictionary<TKey, TValue>)_inner).TryGetValue(key, out value);
-        IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyDictionary<TKey, TValue>)_inner).GetEnumerator();
+        public TValue this[TKey key] => _inner[key];
+        public IEnumerable<TKey> Keys => _inner.Keys;
+        public IEnumerable<TValue> Values => _inner.Values;
+        public int Count => _inner.Count;
+        public bool ContainsKey(TKey key) => _inner.ContainsKey(key);
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _inner.GetEnumerator();
+        public bool TryGetValue(TKey key, out TValue value) => _inner.TryGetValue(key, out value);
+        IEnumerator IEnumerable.GetEnumerator() => _inner.GetEnumerator();
     }
 
-    public struct CompactDictionary<TKey, TValue, TComparer> : IReadOnlyDictionary<TKey, TValue>
+    public struct CompactDictionary<TKey, TValue, TComparer>
+#if !NET35
+        : IReadOnlyDictionary<TKey, TValue>
+#endif
         where TComparer : struct, IEqualityComparer<TKey>
     {
         internal struct Bucket
@@ -131,7 +139,7 @@ namespace LinqToArray
 
                 if (!b.HasValue)
                 {
-                    value = default(TValue);
+                    value = default;
                     return false;
                 }
                 else if (default(TComparer).Equals(b.Key, key))
@@ -149,11 +157,13 @@ namespace LinqToArray
         public ValueEnumerable Values => new ValueEnumerable(_buckets);
 
         public bool ContainsKey(TKey key) => TryGetValue(key, out _);
+#if !NET35
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => Keys;
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
+#endif
         public int Count => _buckets.Count(b => b.HasValue);
 
         public struct Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>

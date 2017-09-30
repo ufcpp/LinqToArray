@@ -6,7 +6,9 @@ namespace LinqToArray
 {
     public static partial class ArrayExtensions
     {
+#if !NET35
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal static int PowerOf2(int x)
         {
             var p = 1;
