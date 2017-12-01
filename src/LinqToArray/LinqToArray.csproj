@@ -12,6 +12,8 @@
     <PackageProjectUrl>https://github.com/ufcpp/LinqToArray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ufcpp/LinqToArray</RepositoryUrl>
     <PackageTags>LINQ</PackageTags>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>bug fix</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,12 +15,16 @@ namespace LinqToArray
     {
         private CompactDictionary<TKey, TValue, StructEquatableComparer<TKey>> _inner;
 
+        public CompactDictionary(int capacity) => _inner = new CompactDictionary<TKey, TValue, StructEquatableComparer<TKey>>(capacity);
+        public CompactDictionary(IEnumerable<KeyValuePair<TKey, TValue>> values) => _inner = new CompactDictionary<TKey, TValue, StructEquatableComparer<TKey>>(values);
+
         public TValue this[TKey key] => _inner[key];
         public IEnumerable<TKey> Keys => _inner.Keys;
         public IEnumerable<TValue> Values => _inner.Values;
         public int Count => _inner.Count;
         public bool ContainsKey(TKey key) => _inner.ContainsKey(key);
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _inner.GetEnumerator();
+        public void AddOrUpdate(TKey key, TValue value) => _inner.AddOrUpdate(key, value);
         public bool TryGetValue(TKey key, out TValue value) => _inner.TryGetValue(key, out value);
         IEnumerator IEnumerable.GetEnumerator() => _inner.GetEnumerator();
     }
@@ -70,7 +74,7 @@ namespace LinqToArray
                     break;
                 }
 
-                hash = (hash + Skip) % mask;
+                hash = (hash + Skip) & mask;
             }
         }
 
@@ -93,7 +97,7 @@ namespace LinqToArray
                 }
                 else if (default(TComparer).Equals(b.Key, key)) return b.Value;
 
-                hash = (hash + Skip) % mask;
+                hash = (hash + Skip) & mask;
             }
         }
 
@@ -121,7 +125,7 @@ namespace LinqToArray
                         break;
                     }
 
-                    hash = (hash + Skip) % mask;
+                    hash = (hash + Skip) & mask;
                 }
             }
         }
@@ -148,7 +152,7 @@ namespace LinqToArray
                     return true;
                 }
 
-                hash = (hash + Skip) % mask;
+                hash = (hash + Skip) & mask;
             }
         }
 
