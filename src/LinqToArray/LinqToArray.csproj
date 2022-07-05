@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;net35</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,9 +15,5 @@
     <Version>1.0.1</Version>
     <PackageReleaseNotes>bug fix</PackageReleaseNotes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
 
 </Project>
